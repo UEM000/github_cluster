@@ -37,6 +37,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # PySpark 3.5.1 + совместимый py4j
+RUN apt-get update && apt-get install -y --no-install-recommends python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip3 install --no-cache-dir pyspark==3.5.1 py4j==0.10.9.7
 
 # SSH без пароля для Spark launch-скриптов
