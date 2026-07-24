@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  spark-master:
+    build: .
+    image: spark-hdfs:3.5.1
+    container_name: spark-master
+    hostname: spark-master
+    networks: [spark-net]
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+      - "9000:9000"
+      - "9870:9870"
+    environment:
+      - SPARK_ROLE=master
+      - HDFS_ROLE=namenode
+    volumes:
+      - namenode-data:/opt/hadoop/data/namenode
+      - spark-logs:/opt/spark/logs
+    command: /entrypoint-master.sh
+
+  spark-worker-1:
+    image: spark-hdfs:3.5.1
+    container_name: spark-worker-1
+    hostname: spark-worker-1
+    networks: [spark-net]
+    depends_on: [spark-master]
+    environment:
+      - SPARK_ROLE=worker
+      - HDFS_ROLE=datanode
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=3g
+    volumes:
+      - datanode-data-1:/opt/hadoop/data/datanode
+    command: /entrypoint-worker.sh
+
+  spark-worker-2:
+    image: spark-hdfs:3.5.1
+    container_name: spark-worker-2
+    hostname: spark-worker-2
+    networks: [spark-net]
+    depends_on: [spark-master]
+    environment:
+      - SPARK_ROLE=worker
+      - HDFS_ROLE=datanode
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=3g
+    volumes:
+      - datanode-data-2:/opt/hadoop/data/datanode
+    command: /entrypoint-worker.sh
+
+networks:
+  spark-net:
+    driver: bridge
+    enable_ipv6: false
+
+volumes:
+  namenode-data:
+  datanode-data-1:
+  datanode-data-2:
+  spark-logs:

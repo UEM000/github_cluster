@@ -1,0 +1,12 @@
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export SPARK_MASTER_HOST=spark-master
+export SPARK_MASTER_PORT=7077
+export SPARK_MASTER_WEBUI_PORT=8080
+export SPARK_WORKER_CORES=${SPARK_WORKER_CORES:-1}
+export SPARK_WORKER_MEMORY=${SPARK_WORKER_MEMORY:-3g}
+export SPARK_WORKER_WEBUI_PORT=8081
+export SPARK_DAEMON_MEMORY=512m
+export HADOOP_HOME=/opt/hadoop
+export HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+export PYSPARK_PYTHON=/usr/bin/python3
+export PYSPARK_DRIVER_PYTHON=/usr/bin/python3
