@@ -32,6 +32,10 @@ RUN wget -q https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSIO
 
 ENV PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
+# Установка pip (не ставится автоматически с python3.10 на Ubuntu 22.04)
+RUN apt-get update && apt-get install -y --no-install-recommends python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
 # PySpark 3.5.1 + совместимый py4j
 RUN pip3 install --no-cache-dir pyspark==3.5.1 py4j==0.10.9.7
 
