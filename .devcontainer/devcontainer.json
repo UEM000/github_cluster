@@ -20,7 +20,7 @@
   "hostRequirements": {
     "cpus": 4,
     "memory": "16gb",
-    "storage": "64gb"
+    "storage": "32gb"
   },
   "forwardPorts": [7077, 8080, 8081, 4040, 9870, 9000],
   "portsAttributes": {
