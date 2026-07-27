@@ -20,7 +20,7 @@ if docker exec $CONTAINER_NAME bash -c "pgrep -f 'jupyter-lab'" > /dev/null 2>&1
     echo "   Jupyter уже был запущен."
 else
     # Запускаем в фоновом режиме (-d)
-    docker exec -d $CONTAINER_NAME bash -c "jupyter lab --ip=0.0.0.0 --port=$PORT --no-browser --allow-root > /opt/spark/jupyter.log 2>&1"
+    docker exec -d -w /opt/spark $CONTAINER_NAME bash -c "jupyter lab --ip=0.0.0.0 --port=$PORT --no-browser --allow-root > /opt/spark/jupyter.log 2>&1"
     echo "   Ожидание запуска сервера..."
     sleep 5
 fi
