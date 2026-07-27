@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Убедимся, что директория для логов существует
+mkdir -p /opt/spark/logs/events
+
 # HDFS NameNode
 if [ ! -d /opt/hadoop/data/namenode/current ]; then
   echo "Formatting NameNode..."
@@ -8,11 +11,9 @@ if [ ! -d /opt/hadoop/data/namenode/current ]; then
 fi
  $HADOOP_HOME/bin/hdfs --daemon start namenode
 
-# Создаём директорию для логов Spark, иначе History Server упадёт
-mkdir -p /opt/spark/logs/events
-
 # Spark Master
  $SPARK_HOME/sbin/start-master.sh
 
-# Ждём, чтобы контейнер не падал
-tail -f /opt/spark/logs/*.log
+# Держим контейнер запущенным (заменяем tail на sleep)
+echo "Spark Master запущен, удерживаем контейнер..."
+sleep infinity
