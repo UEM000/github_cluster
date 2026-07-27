@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd /workspaces/$(basename $RepositoryWorkspacePath)/.devcontainer
+cd .devcontainer
 
 # Сборка образа один раз
 docker compose build
