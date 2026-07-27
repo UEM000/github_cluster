@@ -1,8 +1,14 @@
 #!/bin/bash
 set -e
 
-# Ждём NameNode
-until nc -z spark-master 9000; do sleep 2; done
+mkdir -p /opt/spark/logs
+
+# Ждём NameNode (используем встроенные возможности bash вместо nc)
+echo "Ожидание NameNode на spark-master:9000..."
+until bash -c '</dev/tcp/spark-master/9000' 2>/dev/null; do
+    sleep 2
+done
+echo "NameNode доступен!"
 
 # HDFS DataNode
  $HADOOP_HOME/bin/hdfs --daemon start datanode
@@ -10,4 +16,6 @@ until nc -z spark-master 9000; do sleep 2; done
 # Spark Worker
  $SPARK_HOME/sbin/start-worker.sh spark://spark-master:7077
 
-tail -f /opt/spark/logs/*.log
+# Держим контейнер запущенным
+echo "Spark Worker запущен, удерживаем контейнер..."
+sleep infinity
