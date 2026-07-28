@@ -10,3 +10,5 @@ export HADOOP_HOME=/opt/hadoop
 export HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
 export PYSPARK_PYTHON=/usr/bin/python3
 export PYSPARK_DRIVER_PYTHON=/usr/bin/python3
+
+export CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath --glob):$CLASSPATH
